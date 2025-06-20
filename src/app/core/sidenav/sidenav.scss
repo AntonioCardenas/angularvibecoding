@@ -1,0 +1,23 @@
+.sidenav {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  padding-top: 2rem;
+}
+.sidenav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidenav a {
+  display: block;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+.sidenav a:hover,
+.sidenav a.active-link {
+  background-color: #eef2f5;
+  color: #007bff;
+}

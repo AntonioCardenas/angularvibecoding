@@ -1,1 +1,12 @@
-<p>sidenav works!</p>
+<nav class="sidenav">
+  <ul>
+    @for (item of navItems; track item) {
+    <li>
+      <a routerlink="item.link" routerlinkactive="active-link">
+        <!-- Add icon support here if you use an icon library -->
+        <span>{{ item.label }}</span>
+      </a>
+    </li>
+    }
+  </ul>
+</nav>

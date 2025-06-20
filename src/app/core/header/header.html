@@ -1,1 +1,15 @@
-<p>header works!</p>
+<header class="header">
+  <div class="header-brand">
+    <a routerlink="/">Firebase Studio</a>
+  </div>
+  <div class="header-menu">
+    @if (user$ | async; as user) {
+    <span>Welcome, {{ user.email }}</span>
+    <a routerlink="/profile" class="header-link">Profile</a>
+    <button (click)="logout()" class="btn btn-secondary">Logout</button>
+    } @else {
+    <a routerlink="/login" class="header-link">Login</a>
+    <a routerlink="/register" class="btn btn-primary">Sign Up</a>
+    }
+  </div>
+</header>
