@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@use "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default;
+  root: ":root";
+  logs: true;
+  // include: ; // You can specify components to include if needed
+  // exclude: ; // You can specify components to exclude if needed
+  // prefix: ; // You can specify a prefix for DaisyUI classes if needed
+}

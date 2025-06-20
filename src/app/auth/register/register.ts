@@ -1,11 +1,107 @@
-import { Component } from '@angular/core';
+// @context: Standalone Angular 20 register component using signals for reactive form state, validation, and error handling.
+
+import { Component, OnInit, signal, computed } from '@angular/core';
+import {
+  FormsModule, // Import FormsModule for ngModel
+} from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  standalone: true, // Marking as standalone
+  imports: [FormsModule, RouterLink], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './register.html',
-  styleUrl: './register.scss'
+  styleUrl: './register.scss',
 })
-export class Register {
+export class Register implements OnInit {
+  // Signals for form fields
+  email = signal('');
+  password = signal('');
+  confirmPassword = signal('');
+  showPassword = signal(false);
+  submitted = signal(false); // To track form submission for error display
 
+  // Computed signals for validation
+  isEmailValid = computed(() => {
+    if (!this.email()) return false; // Required
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email()); // Basic email format
+  });
+  isPasswordValid = computed(() => {
+    if (!this.password()) return false; // Required
+    return this.password().length >= 6; // MinLength
+  });
+  isConfirmPasswordValid = computed(() => !!this.confirmPassword()); // Required
+  doPasswordsMatch = computed(() => this.password() === this.confirmPassword());
+
+  isFormValid = computed(
+    () =>
+      this.isEmailValid() &&
+      this.isPasswordValid() &&
+      this.isConfirmPasswordValid() &&
+      this.doPasswordsMatch()
+  );
+
+  // Computed signals for error messages
+  emailError = computed(() => {
+    if (this.submitted() && !this.email()) return 'Email is required.';
+    if (
+      this.submitted() &&
+      this.email() &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email())
+    ) {
+      return 'Please enter a valid email address.';
+    }
+    return '';
+  });
+
+  passwordError = computed(() => {
+    if (this.submitted() && !this.password()) return 'Password is required.';
+    if (this.submitted() && this.password() && this.password().length < 6) {
+      return 'Password must be at least 6 characters long.';
+    }
+    return '';
+  });
+
+  confirmPasswordError = computed(() => {
+    if (this.submitted() && !this.confirmPassword())
+      return 'Confirming password is required.';
+    if (
+      this.submitted() &&
+      this.confirmPassword() &&
+      !this.doPasswordsMatch()
+    ) {
+      return 'Passwords do not match.';
+    }
+    return '';
+  });
+
+  constructor() {} // FormBuilder is no longer needed
+
+  ngOnInit(): void {
+    // No FormGroup initialization needed
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword.update((value) => !value);
+  }
+
+  // Renamed from onLogin to onRegister for clarity
+  onRegister(): void {
+    this.submitted.set(true);
+    if (this.isFormValid()) {
+      const formValue = {
+        email: this.email(),
+        password: this.password(),
+        // confirmPassword is not usually sent to the backend
+      };
+      console.log('Form Submitted!', formValue);
+      // Exclude confirmPassword before sending to backend
+      // const { confirmPassword, ...formData } = this.registerForm.value; // Old way
+      console.log('Data to send to backend:', formValue);
+      // Here, you would typically call an authentication service
+      // e.g., this.authService.register(formValue).subscribe(...);
+    } else {
+      console.log('Form is invalid');
+    }
+  }
 }
