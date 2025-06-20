@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Notification } from '../../shared/services/notification';
+import { NotificationService } from '../../shared/services/notification';
 
 export interface User {
   uid: string;
@@ -15,7 +15,10 @@ export class Auth {
   // Use a BehaviorSubject to hold the current user state
   private userState$ = new BehaviorSubject<User | null>(null);
 
-  constructor(private router: Router, private notification: Notification) {
+  constructor(
+    private router: Router,
+    private notification: NotificationService
+  ) {
     // Check for a logged-in user in localStorage on service initialization
     const storedUser = localStorage.getItem('activeUser');
     if (storedUser) {
