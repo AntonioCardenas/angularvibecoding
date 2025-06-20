@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Auth, User } from '../../auth/services/auth';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +10,13 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './header.scss',
 })
 export class Header {
-  user$: Observable<any | null> = null!;
+  user$: Observable<User | null>;
 
-  constructor() {
-    this.user$;
+  constructor(private auth: Auth) {
+    this.user$ = this.auth.getUserState();
   }
 
-  logout() {}
+  logout() {
+    this.auth.logout();
+  }
 }
