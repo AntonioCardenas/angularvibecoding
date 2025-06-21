@@ -12,13 +12,14 @@ import {
   FormsModule, // Import FormsModule for ngModel
 } from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
 import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 import { Auth, RegisterCredentials } from '../services/auth';
 
 @Component({
   selector: 'app-register',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true, // Marking as standalone
-  imports: [FormsModule, RouterLink], // Changed ReactiveFormsModule to FormsModule
+  imports: [FormsModule, RouterLink, NgOptimizedImage], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })

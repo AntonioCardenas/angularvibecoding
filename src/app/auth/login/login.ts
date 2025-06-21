@@ -12,13 +12,14 @@ import {
   FormsModule, // Import FormsModule for ngModel
 } from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
 import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 import { Auth, LoginCredentials } from '../services/auth';
 
 @Component({
   selector: 'app-login',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true, // Assuming this is a standalone component
-  imports: [RouterLink, FormsModule], // Changed ReactiveFormsModule to FormsModule
+  imports: [RouterLink, FormsModule, NgOptimizedImage], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

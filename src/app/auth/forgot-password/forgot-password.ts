@@ -8,14 +8,14 @@ import {
 import {
   FormsModule, // Import FormsModule for ngModel
 } from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true, // Ensuring it's standalone
-  imports: [CommonModule, FormsModule, RouterLink], // Changed ReactiveFormsModule to FormsModule
+  imports: [CommonModule, FormsModule, RouterLink, NgOptimizedImage], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.scss',
 })

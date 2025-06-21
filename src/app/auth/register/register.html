@@ -1,13 +1,19 @@
-<div class="auth-page-container">
+<div class="flex min-h-screen flex-row-reverse bg-gray-100">
   <!-- Form Panel -->
-  <div class="form-panel">
-    <div class="form-content">
-      <div class="logo">AngularVibeCoding</div>
-      <h1 class="title">Create account</h1>
+  <div class="flex flex-1 items-center justify-center bg-white p-8">
+    <div class="w-full max-w-md">
+      <div
+        class="mb-12 inline-block rounded bg-gray-800 px-3 py-2 text-xl font-bold text-white"
+      >
+        AngularVibeCoding
+      </div>
+      <h1 class="mb-10 text-3xl font-semibold text-gray-800">Create account</h1>
 
-      <form class="auth-form" (ngSubmit)="onRegister()">
-        <div class="form-group">
-          <label for="email" class="form-label">Email</label>
+      <form class="flex flex-col gap-6" (ngSubmit)="onRegister()">
+        <div class="flex flex-col">
+          <label for="email" class="mb-2 text-sm font-medium text-gray-500"
+            >Email</label
+          >
           <input
             id="email"
             type="email"
@@ -16,15 +22,17 @@
             autocomplete="email"
             name="email"
             class="form-input"
-            [class.error]="emailError()"
+            [class.border-red-500]="emailError()"
           />
           @if (emailError()) {
-          <div class="error-message">{{ emailError() }}</div>
+          <div class="mt-1 text-xs text-red-500">{{ emailError() }}</div>
           }
         </div>
 
-        <div class="form-group">
-          <label for="password" class="form-label">Password</label>
+        <div class="flex flex-col">
+          <label for="password" class="mb-2 text-sm font-medium text-gray-500"
+            >Password</label
+          >
           <input
             id="password"
             [type]="showPassword() ? 'text' : 'password'"
@@ -32,15 +40,17 @@
             (ngModelChange)="password.set($event)"
             name="password"
             class="form-input"
-            [class.error]="passwordError()"
+            [class.border-red-500]="passwordError()"
           />
           @if (passwordError()) {
-          <div class="error-message">{{ passwordError() }}</div>
+          <div class="mt-1 text-xs text-red-500">{{ passwordError() }}</div>
           }
         </div>
 
-        <div class="form-group">
-          <label for="confirmPassword" class="form-label"
+        <div class="flex flex-col">
+          <label
+            for="confirmPassword"
+            class="mb-2 text-sm font-medium text-gray-500"
             >Confirm Password</label
           >
           <input
@@ -50,43 +60,51 @@
             (ngModelChange)="confirmPassword.set($event)"
             name="confirmPassword"
             class="form-input"
-            [class.error]="confirmPasswordError()"
+            [class.border-red-500]="confirmPasswordError()"
           />
           @if (confirmPasswordError()) {
-          <div class="error-message">{{ confirmPasswordError() }}</div>
+          <div class="mt-1 text-xs text-red-500">
+            {{ confirmPasswordError() }}
+          </div>
           }
         </div>
 
-        <button type="submit" class="submit-button" [disabled]="!isFormValid()">
+        <button
+          type="submit"
+          class="btn btn-neutral mt-4 w-full"
+          [disabled]="!isFormValid()"
+        >
           Sign Up
         </button>
       </form>
 
-      <div class="footer-link">
+      <div class="mt-8 text-center text-sm text-gray-500">
         <p>
           Already have an account?
-          <a routerLink="/login" class="link">Log in here</a>
+          <a
+            routerLink="/login"
+            class="font-semibold text-gray-800 hover:underline"
+            >Log in here</a
+          >
         </p>
       </div>
     </div>
   </div>
 
   <!-- Decorative Panel -->
-  <div class="decorative-panel">
-    <div class="decorative-content">
-      <img
-        src="../../../assets/images/angular-logo.png"
-        alt="Dashboard preview"
-        class="decorative-image"
-      />
-      <h2 class="decorative-title">Check the status</h2>
-      <p class="decorative-subtitle">
-        It's easy to check the status of your online orders
-      </p>
-      <div class="carousel-dots">
-        <span class="dot"></span>
-        <span class="dot active"></span>
-        <span class="dot"></span>
+  <div
+    class="relative hidden flex-1 items-center justify-center overflow-hidden bg-gray-900 lg:flex"
+  >
+    <div class="decorative-panel">
+      <div class="relative z-10 text-center text-white">
+        <img
+          ngSrc="images/angular-logo.png"
+          alt="Angular Logo"
+          class=""
+          width="300"
+          height="300"
+          priority
+        />
       </div>
     </div>
   </div>
