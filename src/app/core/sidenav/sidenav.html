@@ -1,10 +1,33 @@
 <nav class="sidenav">
-  <ul>
-    @for (item of navItems; track item) {
+  <div class="sidenav-header">
+    <button
+      class="btn btn-ghost btn-sm toggle-btn"
+      (click)="toggleSidenav()"
+      [attr.aria-label]="isCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+    >
+      <span class="toggle-icon">{{ isCollapsed() ? '→' : '←' }}</span>
+    </button>
+  </div>
+
+  <ul class="nav-list">
+    @for (item of navItems(); track item.link) {
     <li>
-      <a routerlink="item.link" routerlinkactive="active-link">
-        <!-- Add icon support here if you use an icon library -->
-        <span>{{ item.label }}</span>
+      <a
+        [routerLink]="item.link"
+        routerLinkActive="active-link"
+        [class.visited]="item.visited"
+        [class.current]="isActive(item.link)"
+        (click)="onNavClick(item)"
+        [title]="isCollapsed() ? item.label : ''"
+        class="nav-link"
+      >
+        <span class="icon">{{ item.icon }}</span>
+        <span class="label" [class.hidden]="isCollapsed()"
+          >{{ item.label }}</span
+        >
+        @if (item.visited && !isCollapsed()) {
+        <span class="visited-indicator">✓</span>
+        }
       </a>
     </li>
     }
