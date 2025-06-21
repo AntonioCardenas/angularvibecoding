@@ -1,117 +1,92 @@
-<div class="h-screen flex">
-  <div
-    class="hidden lg:flex w-full lg:w-1/2 bg-linear-to-r from-purple-500 to-pink-500 justify-around items-center"
-  >
-    <div class="bg-black opacity-20 inset-0 z-0"></div>
-    <div class="w-full mx-auto px-20 flex-col items-center space-y-6">
-      <h1 class="font-bold text-4xl font-sans">Simple App</h1>
-      <p class="mt-1">The simplest app to use</p>
-      <div class="flex justify-center lg:justify-start mt-6">
-        <a
-          routerLink="/login"
-          routerLinkActive="router-link-active"
-          class="hover:bg-emerald-300 hover: hover:-tranindigo-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2"
-          >Already have an account? Login</a
-        >
-      </div>
-    </div>
-  </div>
-  <div
-    class="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8"
-  >
-    <div class="w-full px-8 md:px-32 lg:px-24">
-      <h2 class="text-2xl font-bold text-center mb-6">Create Account</h2>
-      <form class="mt-4" (ngSubmit)="onRegister()">
-        <div class="mb-3">
-          <label class="mb-2 block text-xs font-semibold">Email</label>
+<div class="auth-page-container">
+  <!-- Form Panel -->
+  <div class="form-panel">
+    <div class="form-content">
+      <div class="logo">AngularVibeCoding</div>
+      <h1 class="title">Create account</h1>
+
+      <form class="auth-form" (ngSubmit)="onRegister()">
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
           <input
+            id="email"
             type="email"
             [ngModel]="email()"
             (ngModelChange)="email.set($event)"
             autocomplete="email"
             name="email"
-            placeholder="Enter your email"
-            class="block w-full rounded-md border border-gray-300 focus:border-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-700 py-1 px-1.5 text-gray-500"
+            class="form-input"
+            [class.error]="emailError()"
           />
           @if (emailError()) {
-          <div class="text-red-600 text-xs mt-1">
-            <div>{{ emailError() }}</div>
-          </div>
+          <div class="error-message">{{ emailError() }}</div>
           }
         </div>
 
-        <div class="mb-3">
-          <label class="mb-2 block text-xs font-semibold">Password</label>
-          <div class="relative">
-            <input
-              [type]="showPassword() ? 'text' : 'password'"
-              [ngModel]="password()"
-              (ngModelChange)="password.set($event)"
-              name="password"
-              placeholder="Enter your password"
-              class="block w-full rounded-md border border-gray-300 focus:border-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-700 py-1 px-1.5 text-gray-500"
-            />
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-            >
-              <!-- Basic text toggle, you can replace with icons -->
-              @if (showPassword()) {
-              <span>Hide</span>
-              } @else {
-              <span>Show</span>
-              }
-            </button>
-          </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+            name="password"
+            class="form-input"
+            [class.error]="passwordError()"
+          />
           @if (passwordError()) {
-          <div class="text-red-600 text-xs mt-1">
-            <div>{{ passwordError() }}</div>
-          </div>
+          <div class="error-message">{{ passwordError() }}</div>
           }
         </div>
 
-        <div class="mb-3">
-          <label class="mb-2 block text-xs font-semibold"
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label"
             >Confirm Password</label
           >
           <input
+            id="confirmPassword"
             [type]="showPassword() ? 'text' : 'password'"
             [ngModel]="confirmPassword()"
             (ngModelChange)="confirmPassword.set($event)"
             name="confirmPassword"
-            placeholder="Confirm your password"
-            class="block w-full rounded-md border border-gray-300 focus:border-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-700 py-1 px-1.5 text-gray-500"
+            class="form-input"
+            [class.error]="confirmPasswordError()"
           />
           @if (confirmPasswordError()) {
-          <div class="text-red-600 text-xs mt-1">
-            <div>{{ confirmPasswordError() }}</div>
-          </div>
+          <div class="error-message">{{ confirmPasswordError() }}</div>
           }
         </div>
 
-        <div class="mb-3 mt-6">
-          <button
-            type="submit"
-            class="mb-1.5 block w-full text-center text-white bg-slate-700 hover:bg-slate-900 px-2 py-1.5 rounded-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700"
-            [disabled]="!isFormValid()"
-          >
-            Register
-          </button>
-          <button
-            type="button"
-            class="flex flex-wrap justify-center w-full border border-gray-300 hover:border-gray-500 px-2 py-1.5 rounded-md"
-          >
-            Sign up with Google
-          </button>
-        </div>
+        <button type="submit" class="submit-button" [disabled]="!isFormValid()">
+          Sign Up
+        </button>
       </form>
-      <div class="text-center mt-4">
-        <a
-          routerLink="/login"
-          class="text-xs font-semibold text-slate-700 hover:text-slate-900"
-          >Already have an account? Login</a
-        >
+
+      <div class="footer-link">
+        <p>
+          Already have an account?
+          <a routerLink="/login" class="link">Log in here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative Panel -->
+  <div class="decorative-panel">
+    <div class="decorative-content">
+      <img
+        src="../../../assets/images/angular-logo.png"
+        alt="Dashboard preview"
+        class="decorative-image"
+      />
+      <h2 class="decorative-title">Check the status</h2>
+      <p class="decorative-subtitle">
+        It's easy to check the status of your online orders
+      </p>
+      <div class="carousel-dots">
+        <span class="dot"></span>
+        <span class="dot active"></span>
+        <span class="dot"></span>
       </div>
     </div>
   </div>

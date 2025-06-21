@@ -1,7 +1,33 @@
-.public-container {
+.layout-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  flex-direction: column;
+  height: 100vh;
   background-color: #f4f7f9;
+  overflow: hidden;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f4f7f9;
+  padding: 0;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .layout-body {
+    flex-direction: column;
+  }
+
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+  }
 }

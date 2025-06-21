@@ -1,19 +1,30 @@
 // @context: Standalone Angular 20 register component using signals for reactive form state, validation, and error handling.
 
-import { Component, OnInit, signal, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+  inject,
+} from '@angular/core';
 import {
   FormsModule, // Import FormsModule for ngModel
 } from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
 import { RouterLink } from '@angular/router';
+import { Auth, RegisterCredentials } from '../services/auth';
 
 @Component({
   selector: 'app-register',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true, // Marking as standalone
   imports: [FormsModule, RouterLink], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
 export class Register implements OnInit {
+  private auth = inject(Auth);
+
   // Signals for form fields
   email = signal('');
   password = signal('');
@@ -89,17 +100,14 @@ export class Register implements OnInit {
   onRegister(): void {
     this.submitted.set(true);
     if (this.isFormValid()) {
-      const formValue = {
+      const credentials: RegisterCredentials = {
         email: this.email(),
         password: this.password(),
-        // confirmPassword is not usually sent to the backend
       };
-      console.log('Form Submitted!', formValue);
-      // Exclude confirmPassword before sending to backend
-      // const { confirmPassword, ...formData } = this.registerForm.value; // Old way
-      console.log('Data to send to backend:', formValue);
-      // Here, you would typically call an authentication service
-      // e.g., this.authService.register(formValue).subscribe(...);
+
+      this.auth.register(credentials).catch((error) => {
+        console.error('Registration failed:', error);
+      });
     } else {
       console.log('Form is invalid');
     }

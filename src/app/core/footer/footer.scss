@@ -1,6 +1,28 @@
 .footer {
   padding: 1.5rem 2rem;
-  background-color: #333;
-  color: #fff;
+  background-color: #2d3748;
+  color: #e2e8f0;
   text-align: center;
+  border-top: 1px solid #4a5568;
+  flex-shrink: 0;
+  z-index: 100;
+  position: sticky;
+  bottom: 0;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .footer {
+    padding: 1rem;
+  }
+
+  .footer p {
+    font-size: 0.8rem;
+  }
 }

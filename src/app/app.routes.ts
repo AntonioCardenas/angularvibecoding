@@ -5,6 +5,8 @@ import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
 import { Layout } from './core/layout/layout';
 import { ForgotPassword } from './auth/forgot-password/forgot-password';
+import { Home } from './home/home';
+import { Data } from './data/data';
 
 // Define the application's routes
 export const routes: Routes = [
@@ -27,6 +29,34 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     canActivate: [authGuard], // Protect the layout and its children
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        component: Home,
+        title: 'Home',
+      },
+      // Add other protected routes here
+      {
+        path: 'data',
+        component: Data,
+        title: 'My Data',
+      },
+      {
+        path: 'profile',
+        component: Home, // Placeholder - replace with actual component
+        title: 'Profile',
+      },
+      {
+        path: 'settings',
+        component: Home, // Placeholder - replace with actual component
+        title: 'Settings',
+      },
+    ],
   },
   {
     path: '**', // Wildcard route for 404

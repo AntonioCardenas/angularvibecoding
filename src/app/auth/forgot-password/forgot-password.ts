@@ -1,4 +1,10 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormsModule, // Import FormsModule for ngModel
 } from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
@@ -7,6 +13,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true, // Ensuring it's standalone
   imports: [CommonModule, FormsModule, RouterLink], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './forgot-password.html',

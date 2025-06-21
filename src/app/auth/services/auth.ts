@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from '../../shared/services/notification';
 
 export interface User {
@@ -8,17 +8,27 @@ export interface User {
   email: string;
 }
 
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterCredentials {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
+  private router = inject(Router);
+  private notification = inject(NotificationService);
+
   // Use a BehaviorSubject to hold the current user state
   private userState$ = new BehaviorSubject<User | null>(null);
 
-  constructor(
-    private router: Router,
-    private notification: NotificationService
-  ) {
+  constructor() {
     // Check for a logged-in user in localStorage on service initialization
     const storedUser = localStorage.getItem('activeUser');
     if (storedUser) {
@@ -26,7 +36,7 @@ export class Auth {
     }
   }
 
-  getUserState(): Observable<User | null> {
+  getUserState() {
     return this.userState$.asObservable();
   }
 
@@ -34,36 +44,42 @@ export class Auth {
     return this.userState$.getValue();
   }
 
-  async login({ email, password }: any) {
+  async login(credentials: LoginCredentials): Promise<void> {
     // Mock API call delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     // In a real app, you'd validate the password. Here, we just mock success.
-    const mockUser: User = { uid: 'mock-user-id-' + Date.now(), email: email };
+    const mockUser: User = {
+      uid: 'mock-user-id-' + Date.now(),
+      email: credentials.email,
+    };
 
     // Store user in localStorage to persist session
     localStorage.setItem('activeUser', JSON.stringify(mockUser));
     this.userState$.next(mockUser);
 
     this.notification.showSuccess('Logged in successfully!');
-    this.router.navigate(['/data']);
+    this.router.navigate(['/home']);
   }
 
-  async register({ email, password }: any) {
+  async register(credentials: RegisterCredentials): Promise<void> {
     // Mock API call delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const mockUser: User = { uid: 'mock-user-id-' + Date.now(), email: email };
+    const mockUser: User = {
+      uid: 'mock-user-id-' + Date.now(),
+      email: credentials.email,
+    };
 
     // Log the user in immediately after registration
     localStorage.setItem('activeUser', JSON.stringify(mockUser));
     this.userState$.next(mockUser);
 
     this.notification.showSuccess('Registration successful!');
-    this.router.navigate(['/data']);
+    this.router.navigate(['/home']);
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     // Remove user from localStorage and update subject
     localStorage.removeItem('activeUser');
     this.userState$.next(null);
