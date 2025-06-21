@@ -33,15 +33,29 @@
           <label for="password" class="mb-2 text-sm font-medium text-gray-500"
             >Password</label
           >
-          <input
-            id="password"
-            [type]="showPassword() ? 'text' : 'password'"
-            [ngModel]="password()"
-            (ngModelChange)="password.set($event)"
-            name="password"
-            class="form-input"
-            [class.border-red-500]="passwordError()"
-          />
+          <div class="input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [ngModel]="password()"
+              (ngModelChange)="password.set($event)"
+              name="password"
+              class="form-input"
+              [class.error]="passwordError()"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility()"
+              aria-label="Toggle password visibility"
+            >
+              <mat-icon
+                >{{ showPassword() ? 'visibility_off' : 'visibility'
+                }}</mat-icon
+              >
+            </button>
+          </div>
+
           @if (passwordError()) {
           <div class="mt-1 text-xs text-red-500">{{ passwordError() }}</div>
           }
@@ -53,15 +67,29 @@
             class="mb-2 text-sm font-medium text-gray-500"
             >Confirm Password</label
           >
-          <input
-            id="confirmPassword"
-            [type]="showPassword() ? 'text' : 'password'"
-            [ngModel]="confirmPassword()"
-            (ngModelChange)="confirmPassword.set($event)"
-            name="confirmPassword"
-            class="form-input"
-            [class.border-red-500]="confirmPasswordError()"
-          />
+          <div class="input-wrapper">
+            <input
+              id="confirmPassword"
+              [type]="showPassword() ? 'text' : 'password'"
+              [ngModel]="confirmPassword()"
+              (ngModelChange)="confirmPassword.set($event)"
+              name="confirmPassword"
+              class="form-input"
+              [class.error]="confirmPasswordError()"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility()"
+              aria-label="Toggle password visibility"
+            >
+              <mat-icon
+                >{{ showPassword() ? 'visibility_off' : 'visibility'
+                }}</mat-icon
+              >
+            </button>
+          </div>
+
           @if (confirmPasswordError()) {
           <div class="mt-1 text-xs text-red-500">
             {{ confirmPasswordError() }}

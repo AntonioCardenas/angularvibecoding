@@ -35,17 +35,30 @@
           <label for="password" class="mb-2 text-sm font-medium text-gray-500"
             >Password</label
           >
-          <input
-            id="password"
-            type="password"
-            [ngModel]="password()"
-            (ngModelChange)="password.set($event)"
-            name="password"
-            class="form-input"
-            [class.border-red-500]="passwordError()"
-          />
+          <div class="input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [ngModel]="password()"
+              (ngModelChange)="password.set($event)"
+              name="password"
+              class="form-input"
+              [class.error]="passwordError()"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility()"
+              aria-label="Toggle password visibility"
+            >
+              <mat-icon
+                >{{ showPassword() ? 'visibility_off' : 'visibility'
+                }}</mat-icon
+              >
+            </button>
+          </div>
           @if (passwordError()) {
-          <div class="mt-1 text-xs text-red-500">{{ passwordError() }}</div>
+          <div class="error-message">{{ passwordError() }}</div>
           }
         </div>
 

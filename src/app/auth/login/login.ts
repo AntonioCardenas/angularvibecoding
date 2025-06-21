@@ -13,13 +13,14 @@ import {
 } from '@angular/forms'; // ReactiveFormsModule might be removed if not used elsewhere
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { Auth, LoginCredentials } from '../services/auth';
 
 @Component({
   selector: 'app-login',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true, // Assuming this is a standalone component
-  imports: [RouterLink, FormsModule, NgOptimizedImage], // Changed ReactiveFormsModule to FormsModule
+  imports: [RouterLink, FormsModule, NgOptimizedImage, MatIconModule], // Changed ReactiveFormsModule to FormsModule
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -31,6 +32,7 @@ export class Login implements OnInit {
   password = signal('');
   rememberMe = signal(false);
   submitted = signal(false); // To track form submission for error display
+  showPassword = signal(false); // For toggling password visibility
 
   // Computed signals for validation
   isEmailValid = computed(() =>
@@ -57,6 +59,10 @@ export class Login implements OnInit {
 
   ngOnInit(): void {
     // No FormGroup initialization needed
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword.update((value) => !value);
   }
 
   onLogin(): void {
