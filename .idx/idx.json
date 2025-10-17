@@ -1,0 +1,99 @@
+{
+    "name": "Angular VibeCoding - AI-Ready Template",
+    "description": "Modern Angular 20 template with Signals, TailwindCSS, DaisyUI, and AI/LLM integration patterns",
+    "icon": "https://angular.dev/assets/icons/icon-512x512.png",
+    "repository": "https://github.com/AntonioCardenas/angularvibecoding",
+    "keywords": [
+        "angular",
+        "angular20",
+        "signals",
+        "tailwindcss",
+        "daisyui",
+        "ai",
+        "llm",
+        "gemini",
+        "genkit",
+        "typescript"
+    ],
+    "settings": {
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+        "files.associations": {
+            "*.html": "html"
+        },
+        "[html]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "tailwindCSS.experimental.classRegex": [
+            [
+                "class:\\s*?[\"'`]([^\"'`]*).*?[\"'`]",
+                "[\"'`]([^\"'`]*).*?[\"'`]"
+            ]
+        ]
+    },
+    "tasks": {
+        "dev": {
+            "command": "npm start",
+            "description": "Start Angular development server"
+        },
+        "build": {
+            "command": "npm run build",
+            "description": "Build for production"
+        },
+        "test": {
+            "command": "npm test",
+            "description": "Run unit tests"
+        },
+        "clean:dashboard": {
+            "command": "npm run clean-template:dashboard",
+            "description": "Clean template - Dashboard mode (keeps layout)"
+        },
+        "clean:blank": {
+            "command": "npm run clean-template:blank",
+            "description": "Clean template - Blank mode (minimal)"
+        }
+    },
+    "aiContext": {
+        "framework": "Angular 20",
+        "architecture": "Standalone components with Signals",
+        "stateManagement": "Angular Signals (signal, computed, effect, linkedSignal)",
+        "routing": "Angular Router with lazy loading",
+        "styling": "TailwindCSS 4 + DaisyUI with SCSS",
+        "patterns": [
+            "OnPush change detection everywhere",
+            "inject() function for DI (no constructor injection)",
+            "input()/output() functions (no decorators)",
+            "Native control flow (@if, @for, @switch)",
+            "Resource API for async operations",
+            "linkedSignal for accumulating data",
+            "Streaming with resource.stream",
+            "Type-safe interfaces (no 'any')",
+            "No .component.ts or .service.ts suffixes"
+        ],
+        "aiIntegration": {
+            "recommended": [
+                "Google Gemini API",
+                "Firebase Genkit",
+                "OpenAI API",
+                "Anthropic Claude"
+            ],
+            "patterns": [
+                "Signal-based request triggering",
+                "linkedSignal for chat history",
+                "resource.stream for streaming responses",
+                "Proper loading/error states",
+                "Session management with signals"
+            ]
+        },
+        "fileNaming": "Simple .ts extension (no .component.ts or .service.ts)",
+        "rules": "See .cursorrules for comprehensive coding standards"
+    }
+}

@@ -229,6 +229,60 @@ export class Home {
   log('\nRun "npm start" to see your blank canvas.\n', "cyan");
 }
 
+function removeCleaningScripts() {
+  const rootDir = path.join(__dirname, "..");
+  const scriptsDir = path.join(__dirname);
+
+  log("\n🧹 Removing cleaning scripts for fresh start...", "yellow");
+
+  // Delete all cleaning scripts
+  const scriptsToDelete = [
+    "clean-template.js",
+    "clean-template-dashboard.js",
+    "clean-template-blank.js",
+    "README.md",
+  ];
+
+  scriptsToDelete.forEach((file) => {
+    const filePath = path.join(scriptsDir, file);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      log(`  ✓ Deleted: scripts/${file}`, "red");
+    }
+  });
+
+  // Try to remove scripts directory if empty
+  try {
+    const remainingFiles = fs.readdirSync(scriptsDir);
+    if (remainingFiles.length === 0) {
+      fs.rmdirSync(scriptsDir);
+      log("  ✓ Deleted: scripts/ directory", "red");
+    }
+  } catch (err) {
+    // Directory not empty or other error, that's fine
+  }
+
+  // Update package.json to remove clean scripts
+  log("\n📝 Updating package.json...", "yellow");
+  const packageJsonPath = path.join(rootDir, "package.json");
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+
+  delete packageJson.scripts["clean-template"];
+  delete packageJson.scripts["clean-template:dashboard"];
+  delete packageJson.scripts["clean-template:blank"];
+
+  fs.writeFileSync(
+    packageJsonPath,
+    JSON.stringify(packageJson, null, 2) + "\n"
+  );
+  log("  ✓ Removed clean-template scripts from package.json", "green");
+
+  log(
+    "\n✨ Cleaning scripts removed! You have a completely fresh start.",
+    "green"
+  );
+}
+
 // Confirmation prompt
 log("\n⚠️  BLANK MODE: This removes EVERYTHING including layout!", "yellow");
 log("You'll get a single home page with NO header/footer/sidenav.", "yellow");
@@ -237,12 +291,35 @@ log("This action cannot be undone.\n", "yellow");
 rl.question("Are you sure you want a blank scaffold? (yes/no): ", (answer) => {
   if (answer.toLowerCase() === "yes" || answer.toLowerCase() === "y") {
     cleanTemplateBlank();
+    rl.close();
+
+    // Ask if user wants to remove cleaning scripts too
+    log("\n❓ One more thing...", "cyan");
+    const rl2 = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    rl2.question(
+      "Remove cleaning scripts for a completely fresh start? (yes/no): ",
+      (answer2) => {
+        if (answer2.toLowerCase() === "yes" || answer2.toLowerCase() === "y") {
+          removeCleaningScripts();
+        } else {
+          log(
+            "\n✓ Keeping cleaning scripts (you can run them again if needed)",
+            "cyan"
+          );
+        }
+        rl2.close();
+      }
+    );
   } else {
     log("\n❌ Cleanup cancelled.", "red");
     log(
       'Tip: Use "npm run clean-template:dashboard" for dashboard mode.\n',
       "cyan"
     );
+    rl.close();
   }
-  rl.close();
 });

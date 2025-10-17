@@ -48,6 +48,15 @@ npm run clean-template
 npm run clean-template:dashboard
 ```
 
+**After cleaning, you'll be asked:**
+
+```
+Remove cleaning scripts for a completely fresh start? (yes/no):
+```
+
+- Type `yes` = Scripts folder and npm commands removed (completely fresh!)
+- Type `no` = Keep scripts (can clean again if needed)
+
 ### After Cleaning - Dashboard Mode:
 
 **Visual Structure:**
@@ -150,6 +159,15 @@ npm run clean-template
 # Or run directly
 npm run clean-template:blank
 ```
+
+**After cleaning, you'll be asked:**
+
+```
+Remove cleaning scripts for a completely fresh start? (yes/no):
+```
+
+- Type `yes` = Scripts folder and npm commands removed (completely fresh!)
+- Type `no` = Keep scripts (can clean again if needed)
 
 ### After Cleaning - Blank Mode:
 

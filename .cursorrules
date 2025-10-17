@@ -395,6 +395,168 @@ Prompts you to choose between modes.
 - Refer to `docs/best-practices.md` for detailed examples
 - Use `docs/setup.md` for AI context setup guidelines
 
+## AI/LLM Integration Patterns
+
+When building AI-powered features with Angular, follow these patterns from [Angular.dev AI Design Patterns](https://angular.dev/ai/design-patterns):
+
+### Triggering AI Requests with Signals
+
+**Pattern: Separate input from submission**
+
+```typescript
+// Store user's raw input
+userInput = signal('');
+
+// Store submitted value that triggers API
+submittedPrompt = signal('');
+
+// Resource triggered only on submission
+aiResource = resource({
+  params: () => this.submittedPrompt(),
+  loader: async ({params}) => {
+    return await this.aiService.generateContent(params);
+  }
+});
+
+// On submit button click
+onSubmit() {
+  this.submittedPrompt.set(this.userInput());
+}
+```
+
+### Managing LLM Response Data
+
+**Pattern: Use linkedSignal for accumulating responses**
+
+```typescript
+// Accumulate chat history or streaming responses
+chatHistory = linkedSignal<Message[], Message[]>({
+  source: () => this.aiResource.value().messages,
+  computation: (newMessages, previous) => {
+    const existing = previous?.value || [];
+    return [...existing, ...newMessages];
+  },
+});
+```
+
+### Streaming AI Responses
+
+**Pattern: Use resource stream for real-time updates**
+
+```typescript
+streamingResponse = resource({
+  stream: async () => {
+    const data = signal<ResourceStreamItem<string>>({ value: "" });
+    const response = await this.aiService.streamContent(prompt);
+
+    (async () => {
+      for await (const chunk of response.stream) {
+        data.update((prev) => {
+          if ("value" in prev) {
+            return { value: `${prev.value}${chunk}` };
+          }
+          return prev;
+        });
+      }
+    })();
+
+    return data;
+  },
+});
+```
+
+### AI-Friendly Templates
+
+```html
+<!-- Loading state -->
+@if (aiResource.isLoading()) {
+<div class="loading">
+  <span class="loading loading-spinner"></span>
+  <p>AI is thinking...</p>
+</div>
+}
+
+<!-- Success state with streaming content -->
+@else if (aiResource.hasValue()) {
+<div class="ai-response">{{ aiResource.value() }}</div>
+}
+
+<!-- Error state with retry -->
+@else if (aiResource.error()) {
+<div class="alert alert-error">
+  <p>{{ aiResource.error() }}</p>
+  <button class="btn btn-primary" (click)="aiResource.reload()">Retry</button>
+</div>
+}
+```
+
+### Performance Best Practices for AI Features
+
+1. **Scoped Resources**: Place AI resources in components that directly use the data
+2. **SSR with Hydration**: Show placeholders, defer AI content until hydration
+3. **Loading Indicators**: Always show loading state for LLM operations
+4. **Error Handling**: Provide retry mechanisms (use `resource.reload()`)
+5. **Zoneless Mode**: Use signals to avoid unnecessary change detection
+
+### Type Safety for AI Responses
+
+```typescript
+// Define strong types for LLM responses
+interface AIStoryResponse {
+  storyParts: string[];
+  metadata: {
+    tokensUsed: number;
+    model: string;
+  };
+}
+
+// Typed resource
+storyResource = resource<AIStoryResponse>({
+  params: () => this.storyPrompt(),
+  loader: async ({ params }) => {
+    return await this.aiService.generateStory(params);
+  },
+});
+```
+
+### AI Service Pattern
+
+```typescript
+@Injectable({
+  providedIn: "root",
+})
+export class AIService {
+  private http = inject(HttpClient);
+
+  // Session management with signals
+  sessionId = signal<string | null>(null);
+
+  generateContent(prompt: string) {
+    return this.http.post<AIResponse>("/api/ai/generate", {
+      prompt,
+      sessionId: this.sessionId(),
+    });
+  }
+
+  async *streamContent(prompt: string) {
+    // Streaming implementation
+    const response = await fetch("/api/ai/stream", {
+      method: "POST",
+      body: JSON.stringify({ prompt }),
+    });
+
+    const reader = response.body?.getReader();
+    if (!reader) return;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      yield new TextDecoder().decode(value);
+    }
+  }
+}
+```
+
 ## Remember
 
 - 🚫 NO `.component.ts` or `.service.ts` suffixes
@@ -409,3 +571,6 @@ Prompts you to choose between modes.
 - ✅ USE native control flow (@if, @for, @switch)
 - ✅ USE OnPush change detection
 - ✅ USE strict TypeScript
+- ✅ USE resource API for AI/async operations
+- ✅ USE linkedSignal for accumulating AI responses
+- ✅ USE proper loading/error states for AI features

@@ -66,7 +66,9 @@ Guide Gemini at the file level with `@context:` comments. This is incredibly pow
 
 Angular 20 standalone (no NgModules)
 
-Angular Signals (signal, computed, effect)
+Angular Signals (signal, computed, effect, linkedSignal)
+
+Resource API for async operations and AI/LLM integration
 
 Modern Control Flow: @if, @for, @defer
 
@@ -75,6 +77,8 @@ TailwindCSS + DaisyUI (with SCSS, no tailwind.config.js)
 RxJS for complex asynchronous operations
 
 SCSS as the main styling engine
+
+**AI-Ready:** Built-in patterns for AI/LLM integration (Gemini, OpenAI, Claude, etc.)
 
 ## 🧹 Clean Template Script - Two Modes!
 
@@ -126,8 +130,11 @@ It will ask you to choose:
 - ✅ Keep all configuration and styling (TailwindCSS, DaisyUI, .cursorrules)
 - ✅ Give you a beautiful welcome page
 - ✅ Keep shared utilities (notification, spinner)
+- ✅ **Optional:** Remove cleaning scripts themselves for completely fresh start
 
 📖 See detailed comparison: [docs/clean-template-modes.md](docs/clean-template-modes.md)
+
+**Bonus Feature:** After cleaning, you'll be asked if you want to remove the cleaning scripts themselves (the `scripts/` folder and npm commands). This gives you a completely fresh start with no template artifacts!
 
 ## Development server
 
@@ -191,9 +198,56 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+## 🤖 AI/LLM Integration
+
+This template includes comprehensive patterns for integrating AI and LLM APIs:
+
+- ✅ Signal-based request triggering
+- ✅ LinkedSignal for chat history and streaming responses
+- ✅ Resource API for async AI operations
+- ✅ Streaming support for real-time AI responses
+- ✅ Proper loading/error states for AI features
+- ✅ Type-safe AI response handling
+
+📖 **Full Guide:** [docs/ai-integration-patterns.md](docs/ai-integration-patterns.md)
+
+**Supported AI Providers:**
+
+- Google Gemini API
+- Firebase Genkit
+- OpenAI API
+- Anthropic Claude
+- Any REST or streaming API
+
+**Example: Simple AI Component**
+
+```typescript
+@Component({...})
+export class AIChat {
+  userInput = signal('');
+  submittedPrompt = signal('');
+
+  aiResponse = resource({
+    params: () => this.submittedPrompt(),
+    loader: async ({params}) => {
+      return await this.aiService.generate(params);
+    }
+  });
+
+  onSubmit() {
+    this.submittedPrompt.set(this.userInput());
+  }
+}
+```
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+**AI Integration:**
+
+- [Angular AI Design Patterns](https://angular.dev/ai/design-patterns)
+- [AI Integration Guide](docs/ai-integration-patterns.md)
 
 📂 Project Structure
 Briefly explain the layout of your src/app directory or main source folder. This helps Gemini locate files and understand the separation of concerns.
