@@ -6,6 +6,10 @@ This boilerplate is **Tailwind 4 and DaisyUI ready** and optimized for cloud-bas
 
 ---
 
+## ✨ Template Cleaned
+
+This template has been cleaned and is ready for your project! The authentication examples and demo pages have been removed, leaving you with a clean slate while keeping all the configuration, styling, and core structure intact.
+
 ## 🚀 Key Features
 
 - **Future-Proof Angular:** Built on the latest **Angular 20** with a fully `standalone` architecture. No `NgModules`, just pure, modern components.
@@ -71,6 +75,59 @@ TailwindCSS + DaisyUI (with SCSS, no tailwind.config.js)
 RxJS for complex asynchronous operations
 
 SCSS as the main styling engine
+
+## 🧹 Clean Template Script - Two Modes!
+
+Want to start fresh? This template includes demo authentication pages and example components to help you understand the structure. Once you're ready to build your own project, choose from **two cleaning modes**:
+
+### Mode 1: 🎨 Dashboard Mode (Recommended)
+
+Perfect for dashboards, admin panels, and full-featured apps.
+
+**Keeps:**
+
+- ✅ Complete layout structure (header, sidebar, footer)
+- ✅ Collapsible navigation
+- ✅ Professional dashboard structure
+
+```bash
+npm run clean-template:dashboard
+```
+
+### Mode 2: ✨ Blank Mode
+
+Perfect for custom designs, landing pages, starting from absolute scratch.
+
+**Removes:**
+
+- ❌ ALL layout components (header, sidebar, footer)
+- ✅ Gives you a minimal single page to build from
+
+```bash
+npm run clean-template:blank
+```
+
+### Interactive Selection
+
+Not sure which mode? Run the interactive selector:
+
+```bash
+npm run clean-template
+```
+
+It will ask you to choose:
+
+- **1** = Dashboard Mode (keeps layout structure)
+- **2** = Blank Mode (minimal scaffold)
+
+**Both modes:**
+
+- ✅ Remove all demo/example pages (login, register, auth, etc.)
+- ✅ Keep all configuration and styling (TailwindCSS, DaisyUI, .cursorrules)
+- ✅ Give you a beautiful welcome page
+- ✅ Keep shared utilities (notification, spinner)
+
+📖 See detailed comparison: [docs/clean-template-modes.md](docs/clean-template-modes.md)
 
 ## Development server
 

@@ -326,7 +326,66 @@ ng generate service path/service-name
 
 # Generate new guard
 ng generate guard path/guard-name
+
+# Clean the template (remove demo/example content)
+npm run clean-template
 ```
+
+## Clean Template Script - Two Modes
+
+This project includes scripts to remove demo content with TWO modes:
+
+### Dashboard Mode (Recommended)
+
+```bash
+npm run clean-template:dashboard
+```
+
+**Perfect for:** Dashboards, admin panels, full-featured apps
+
+**Keeps:**
+
+- Complete layout structure (header, footer, sidenav, layout)
+- Dashboard-style welcome page
+- Collapsible navigation
+- Professional structure
+
+### Blank Mode (Minimal)
+
+```bash
+npm run clean-template:blank
+```
+
+**Perfect for:** Custom designs, landing pages, absolute scratch
+
+**Removes:**
+
+- ALL layout components (header, footer, sidenav, layout)
+- Gives minimal single-page starter
+
+### Interactive Selection
+
+```bash
+npm run clean-template
+```
+
+Prompts you to choose between modes.
+
+**Both modes remove:**
+
+- Authentication pages and services
+- Demo data pages
+- Example components
+
+**Both modes keep:**
+
+- Shared utilities (notification, spinner, services)
+- All configuration files
+- TailwindCSS and DaisyUI setup
+- Documentation and .cursorrules
+- Best practices structure
+
+📖 See [docs/clean-template-modes.md](docs/clean-template-modes.md) for detailed comparison.
 
 ## Additional Context
 

@@ -26,7 +26,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "clean-template": "node scripts/clean-template.js",
+    "clean-template:dashboard": "node scripts/clean-template-dashboard.js",
+    "clean-template:blank": "node scripts/clean-template-blank.js"
   },
   "private": true,
   "dependencies": {
