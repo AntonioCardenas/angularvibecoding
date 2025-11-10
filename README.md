@@ -136,6 +136,14 @@ It will ask you to choose:
 
 **Bonus Feature:** After cleaning, you'll be asked if you want to remove the cleaning scripts themselves (the `scripts/` folder and npm commands). This gives you a completely fresh start with no template artifacts!
 
+### Why the Clean Slate Matters
+
+Running one of the cleaning modes preserves all of the context-building assets (this `README.md`, `.cursorrules`, docs, and AI pattern guides) while stripping away demo code. That means every new project you spin up starts with:
+
+- A focused file tree that matches the conventions documented here, so Gemini and other AI assistants immediately understand the architecture.
+- Ready-to-use best-practice patterns for signals, AI resources, and styling—no need to reverse-engineer sample components first.
+- A consistent onboarding story for teammates and future you: the README stays your master prompt and the rest of the docs stay relevant because the template has already been aligned to them.
+
 ## Development server
 
 To start a local development server, run:
